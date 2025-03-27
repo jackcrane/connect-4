@@ -2,7 +2,7 @@
 
 Our take on this project is to create Connect 4.
 
-The Main.java file is located at `/src/main/java/org.example/Main.java`.
+The Main.java file is located at `/src/Main.java`.
 
 ## Installation
 
