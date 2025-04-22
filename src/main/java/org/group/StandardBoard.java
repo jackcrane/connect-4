@@ -37,6 +37,7 @@ public class StandardBoard implements GameBoard {
 	}
 
 	public Piece checkWin() {
+		int STEPS = 4;
 	    // Directions: horizontal, vertical, and two diagonals
 	    int[][] directions = {
 	        {1, 0},  // horizontal
@@ -55,7 +56,7 @@ public class StandardBoard implements GameBoard {
 	                int count = 1;
 
 	                // Check in the positive direction
-	                for (int step = 1; step < 4; step++) {
+	                for (int step = 1; step < STEPS; step++) {
 	                    int nx = x + dx * step;
 	                    int ny = y + dy * step;
 	                    if (nx < 0 || nx >= width || ny < 0 || ny >= height) break;
@@ -68,7 +69,7 @@ public class StandardBoard implements GameBoard {
 	                }
 
 	                // Check in the negative direction
-	                for (int step = 1; step < 4; step++) {
+	                for (int step = 1; step < STEPS; step++) {
 	                    int nx = x - dx * step;
 	                    int ny = y - dy * step;
 	                    if (nx < 0 || nx >= width || ny < 0 || ny >= height) break;
@@ -80,7 +81,7 @@ public class StandardBoard implements GameBoard {
 	                    }
 	                }
 
-	                if (count >= 4) {
+	                if (count >= STEPS) {
 						System.out.println("WINNER" + " " + current);
 	                    return current;
 	                }
