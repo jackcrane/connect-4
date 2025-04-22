@@ -13,6 +13,7 @@ public class GameController {
     public void handleMove(int col){
         if(gameModel.dropPiece(col)){
             if(gameModel.checkWin()){
+                window.updateBoard();
                 window.showWinner(gameModel.getCurrentPlayer());
             }
             else{

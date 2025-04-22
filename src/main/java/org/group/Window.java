@@ -96,7 +96,7 @@ public class Window {
             controller.restartGame();
             resetView();
             winnerLabel.setVisible(false);
-            statusLabel.setText("Current Player: " + controller.getCurrentPlayer().getName());
+            updateBoard();
         });
 
         JPanel left = new JPanel();
@@ -142,8 +142,7 @@ public class Window {
     }
 
     public void showWinner(Player player) {
-        winnerLabel.setText("Player " + player.getName() + " won!");
-        winnerLabel.setVisible(true);
+        showMessage("Player " + player.getName() + " (" + player.getToken() + ")" + " won!");
     }
 
     public void showMessage(String message) {

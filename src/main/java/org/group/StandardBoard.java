@@ -36,83 +36,59 @@ public class StandardBoard implements GameBoard {
 		return false;
 	}
 
-	public Piece checkWin(Piece checkedPiece) {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-
-				if (board[j][i].equals(checkedPiece)) {
-
-					//Check for matches all around
-					for (int row = -1; row <=1; row++) {
-						for (int col = -1; col <= 1; col++) {
-
-							// Position does not exist, so just continue on.
-							if ((i+row < 0 || i+row >= height) || (j+col < 0 || j+col >= width)) {
-								continue;
-							}
-							else {
-								byte tick = 1;
-								byte xView = (byte)(i+row+row);
-								byte yView = (byte)(j+col+col);
-
-								//Check in a line.
-								while (true) { // If the called position doesn't exist, break.
-									if ((yView < 0 || yView >= height) || (xView < 0 || xView >= width)) {
-										break;
-									}
-
-									if (board[xView][yView].equals(checkedPiece)) {
-										tick++;
-										xView += row;
-										yView += col;
-
-										if (tick >= 4) { // If we get to four in a row, someone won!
-											return checkedPiece;
-										}
-									} else { // If we don't have four in a row, break.
-										break;
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// No piece found.
-		return null;
-	}
-
 	public Piece checkWin() {
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				Piece current = board[j][i];
-				if (current == null) continue;
+	    // Directions: horizontal, vertical, and two diagonals
+	    int[][] directions = {
+	        {1, 0},  // horizontal
+	        {0, 1},  // vertical
+	        {1, 1},  // diagonal down-right
+	        {1, -1}  // diagonal up-right
+	    };
 
-				for (int row = -1; row <= 1; row++) {
-					for (int col = -1; col <= 1; col++) {
-						if (row == 0 && col == 0) continue;
+	    for (int x = 0; x < width; x++) {
+	        for (int y = 0; y < height; y++) {
+	            Piece current = board[x][y];
+	            if (current == null) continue;
 
-						int xView = j + col;
-						int yView = i + row;
-						int tick = 1;
+	            for (int[] dir : directions) {
+	                int dx = dir[0], dy = dir[1];
+	                int count = 1;
 
-						while (xView >= 0 && xView < width && yView >= 0 && yView < height
-								&& board[xView][yView] != null
-								&& board[xView][yView].equals(current)) {
-							tick++;
-							if (tick >= 4) return current;
+	                // Check in the positive direction
+	                for (int step = 1; step < 4; step++) {
+	                    int nx = x + dx * step;
+	                    int ny = y + dy * step;
+	                    if (nx < 0 || nx >= width || ny < 0 || ny >= height) break;
+	                    Piece next = board[nx][ny];
+	                    if (next != null && next.getColor().equals(current.getColor())) {
+	                        count++;
+	                    } else {
+	                        break;
+	                    }
+	                }
 
-							xView += col;
-							yView += row;
-						}
-					}
-				}
-			}
-		}
+	                // Check in the negative direction
+	                for (int step = 1; step < 4; step++) {
+	                    int nx = x - dx * step;
+	                    int ny = y - dy * step;
+	                    if (nx < 0 || nx >= width || ny < 0 || ny >= height) break;
+	                    Piece next = board[nx][ny];
+	                    if (next != null && next.getColor().equals(current.getColor())) {
+	                        count++;
+	                    } else {
+	                        break;
+	                    }
+	                }
 
-		return null;
+	                if (count >= 4) {
+						System.out.println("WINNER" + " " + current);
+	                    return current;
+	                }
+	            }
+	        }
+	    }
+
+	    return null;
 	}
 
 	private boolean checkSpot(int columnIndex, int rowIndex) {
