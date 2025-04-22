@@ -58,6 +58,7 @@ public class Window {
 
         // --- Bottom status & controls ---
         statusLabel = new JLabel();
+        statusLabel.setOpaque(true);
         winnerLabel = new JLabel("", SwingConstants.CENTER);
         winnerLabel.setOpaque(true);
         winnerLabel.setBackground(Color.RED);
@@ -114,6 +115,17 @@ public class Window {
             }
         }
         statusLabel.setText("Current Player: " + controller.getCurrentPlayer().getName());
+        String currentToken = controller.getCurrentPlayer().getToken();
+        if ("Red".equalsIgnoreCase(currentToken)) {
+            statusLabel.setBackground(Color.RED);
+            statusLabel.setForeground(Color.WHITE);
+        } else if ("Yellow".equalsIgnoreCase(currentToken)) {
+            statusLabel.setBackground(Color.YELLOW);
+            statusLabel.setForeground(Color.BLACK);
+        } else {
+            statusLabel.setBackground(null);
+            statusLabel.setForeground(Color.BLACK);
+        }
         window.repaint();
     }
 

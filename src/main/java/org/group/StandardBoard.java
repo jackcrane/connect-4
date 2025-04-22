@@ -18,7 +18,7 @@ public class StandardBoard implements GameBoard {
 	}
 
 	public boolean isValidMove(int col) {
-		return true;
+		return board[col][0] == null;
 	}
 
 	public boolean isFull() {
@@ -27,13 +27,12 @@ public class StandardBoard implements GameBoard {
 
 
 	public boolean placePiece(Piece piece, int columnIndex) {
-		for (int i = 0; i < height; i++) {
-			if (checkSpot(columnIndex,i)) {
-				board[columnIndex][i] = piece;
+		for (int row = height - 1; row >= 0; row--) {
+			if (checkSpot(columnIndex, row)) {
+				board[columnIndex][row] = piece;
 				return true;
 			}
 		}
-
 		return false;
 	}
 

@@ -17,7 +17,7 @@ public class GameModel implements Serializable{
 
     public boolean dropPiece(int col){
         if(board.isValidMove(col)){
-            board.placePiece(new Piece(players[currentPlayer].toString()), col);
+            board.placePiece(new Piece(players[currentPlayer].getToken()), col);
             return true;
         }
         return false;
