@@ -1,4 +1,4 @@
-package src;
+package org.group;
 
 public class Piece {
     private String color;

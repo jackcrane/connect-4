@@ -1,4 +1,4 @@
-package src;
+package org.group;
 import java.io.*;
 
 public class GameController {
@@ -11,12 +11,12 @@ public class GameController {
     }
 
     public void handleMove(int col){
-        if(model.dropPiece(col)){
-            if(model.checkWin()){
-                window.showWinner(model.getCurrentPlayer());
+        if(gameModel.dropPiece(col)){
+            if(gameModel.checkWin()){
+                window.showWinner(gameModel.getCurrentPlayer());
             }
             else{
-                model.switchPlayer();
+                gameModel.switchPlayer();
                 window.updateBoard();
             }
         }
@@ -26,19 +26,19 @@ public class GameController {
     }
 
     public void restartGame(){
-        model.resetGame();
+        gameModel.resetGame();
         window.resetView();
     }
 
     public void saveGame(String filename){
         try{
             FileOutputStream fileOut = new FileOutputStream(filename);
-            ObjectOutputStream objectOut = new ObjectOutputStream(fileout);
-            objectOut.writeObject(model);
+            ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+            objectOut.writeObject(gameModel);
             objectOut.close();
             fileOut.close();
             System.out.println("Game saved to" + filename);
-        } catch(IOException e){
+        } catch(IOException error){
             System.out.println("Error saving game: " + error.getMessage());
         }
     }
@@ -47,10 +47,10 @@ public class GameController {
         try{
             FileInputStream fileIn = new FileInputStream(filename);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            model = (GameModel) objectIn.readObject();
+            gameModel = (GameModel) objectIn.readObject();
             objectIn.close();
             fileIn.close();
-            window.updateBaord();
+            window.updateBoard();
             System.out.println("Game loaded from" + filename);
         } catch(Exception error){
             System.out.println("Error loading game: " + error.getMessage());

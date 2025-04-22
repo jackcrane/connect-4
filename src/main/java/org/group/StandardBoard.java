@@ -1,4 +1,4 @@
-package src;
+package org.group;
 
 public class StandardBoard implements GameBoard {
 	private Piece[][] board;
@@ -17,7 +17,14 @@ public class StandardBoard implements GameBoard {
 		this.height = height;
 		
 	}
-	
+
+	public boolean isValidMove(int col) {
+		return true;
+	}
+
+	public boolean isFull() {
+		return false;
+	}
 	
 	
 	public boolean placePiece(Piece piece, int columnIndex) {
@@ -32,9 +39,6 @@ public class StandardBoard implements GameBoard {
 	}
 	
 	public Piece checkWin(Piece checkedPiece) {
-
-		
-		
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				
@@ -81,8 +85,37 @@ public class StandardBoard implements GameBoard {
 		// No piece found.
 		return null;
 	}
-	
-	
+
+	public Piece checkWin() {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				Piece current = board[j][i];
+				if (current == null) continue;
+
+				for (int row = -1; row <= 1; row++) {
+					for (int col = -1; col <= 1; col++) {
+						if (row == 0 && col == 0) continue;
+
+						int xView = j + col;
+						int yView = i + row;
+						int tick = 1;
+
+						while (xView >= 0 && xView < width && yView >= 0 && yView < height
+								&& board[xView][yView] != null
+								&& board[xView][yView].equals(current)) {
+							tick++;
+							if (tick >= 4) return current;
+
+							xView += col;
+							yView += row;
+						}
+					}
+				}
+			}
+		}
+
+		return null;
+	}
 	
 	private boolean checkSpot(int columnIndex, int rowIndex) {
 		if (board[columnIndex][rowIndex] == null) {

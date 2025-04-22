@@ -1,3 +1,5 @@
+package org.group;
+
 public class Player {
     private String name;
     private String token;
@@ -12,13 +14,13 @@ public class Player {
     }
 
     public String getToken(){
-        return Token;
+        return token;
     }
 
     public int makeMove(int column, String[][] board){
-        for (int row = board.length - 1; roq>= 0; row--){
+        for (int row = board.length - 1; row >= 0; row--){
             if (board[row][column] == null){ // to see if it has empty space
-                board[roq][column] = token;
+                board[row][column] = token;
                 return row; // should return the row where it was placed
             }
         }

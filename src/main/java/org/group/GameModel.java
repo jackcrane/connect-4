@@ -1,13 +1,13 @@
-package src;
+package org.group;
 import java.io.Serializable;
 
 public class GameModel implements Serializable{
-    private Gameboard board;
+    private GameBoard board;
     private Player[] players;
     private int currentPlayer;
 
     public GameModel(){
-        board = new Gameboard();
+        board = new StandardBoard();
         players = new Player[]{
             new Player("Player 1", "Red"),
             new Player("Player 2", "Yellow")
@@ -17,10 +17,10 @@ public class GameModel implements Serializable{
 
     public boolean dropPiece(int col){
         if(board.isValidMove(col)){
-            board.placePiece(col, new Piece(players[currentPlayer].getColor()));
-            return True;
+            board.placePiece(new Piece(players[currentPlayer].toString()), col);
+            return true;
         }
-        return False;
+        return false;
     }
 
     public void switchPlayer(){
@@ -32,7 +32,7 @@ public class GameModel implements Serializable{
     }
 
     public boolean checkWin(){
-        return board.checkWin();
+        return board.checkWin() != null;
     }
 
     public boolean isDraw(){
@@ -40,7 +40,7 @@ public class GameModel implements Serializable{
     }
 
     public void resetGame(){
-        board.reset();
+        board.resetBoard();
         currentPlayer = 0;
     }
 }
