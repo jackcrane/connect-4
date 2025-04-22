@@ -16,6 +16,10 @@ public class GameController {
                 window.updateBoard();
                 window.showWinner(gameModel.getCurrentPlayer());
             }
+            if(gameModel.isDraw()) {
+                window.updateBoard();
+                window.showMessage("Draw. No one won");
+            }
             else{
                 gameModel.switchPlayer();
                 window.updateBoard();

@@ -24,7 +24,13 @@ public class StandardBoard implements GameBoard, Serializable {
 	}
 
 	public boolean isFull() {
-		return false;
+		int fullCount = 0;
+		for(int col = 0; col < width; col++) {
+			if(board[col][0] != null) {
+				fullCount++;
+			}
+		}
+		return fullCount == width;
 	}
 
 
