@@ -1,6 +1,8 @@
 package org.group;
 
-public class StandardBoard implements GameBoard {
+import java.io.Serializable;
+
+public class StandardBoard implements GameBoard, Serializable {
 	private Piece[][] board;
 	private int width;
 	private int height;
