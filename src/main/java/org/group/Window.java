@@ -1,7 +1,9 @@
 package org.group;
 
 import javax.swing.*;
+import javax.swing.ImageIcon;
 import java.awt.*;
+import java.awt.Image;
 
 public class Window {
     private static final int ROWS = 6;
@@ -17,25 +19,33 @@ public class Window {
     public Window(GameController controller) {
         this.controller = controller;
 
-        window = new JFrame("Connect 4");
+        window = new JFrame("Connect 4");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setLayout(new BorderLayout(5,5));
 
-        // --- Header ---
-        String headerHtml =
-                "<html><div style='text-align:center'>"
-                        +   "<span style='font-size:12px;color:#444;'>THE ORIGINAL GAME OF</span><br>"
-                        +   "<span style='font-size:36px;font-weight:bold;'>CONNECT 4</span>"
-                        + "</div></html>";
-        JLabel header = new JLabel(headerHtml, SwingConstants.CENTER);
-        header.setBorder(BorderFactory.createEmptyBorder(10,0,10,0));
-        window.add(header, BorderLayout.NORTH);
+        // --- Header + Buttons Panel ---
+        JPanel northPanel = new JPanel(new BorderLayout());
 
-        // --- Drop buttons ---
-        JPanel top = new JPanel(new GridLayout(1, COLS, 2,2));
+        String logoPath = "src/main/resources/org/group/Connect_4_game_logo.png";
+        ImageIcon originalIcon = new ImageIcon(logoPath);
+        Image img = originalIcon.getImage();
+        int newWidth = 300;
+        int newHeight = img.getHeight(null) * newWidth / img.getWidth(null);
+        Image scaledImage = img.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        ImageIcon logoIcon = new ImageIcon(scaledImage);
+        // Header panel to right-align logo
+        JPanel headerPanel = new JPanel(new BorderLayout());
+        headerPanel.setOpaque(false);
+        JLabel header = new JLabel(logoIcon);
+        header.setHorizontalAlignment(SwingConstants.RIGHT);
+        headerPanel.add(header, BorderLayout.EAST);
+        northPanel.add(headerPanel, BorderLayout.NORTH);
+
+        // Buttons row
+        JPanel top = new JPanel(new GridLayout(1, COLS, 2, 2));
         for (int c = 0; c < COLS; c++) {
             final int col = c;
-            JButton btn = new JButton("Drop ↓");
+            JButton btn = new JButton("↓");
             btn.setFont(btn.getFont().deriveFont(Font.BOLD, 14f));
             btn.addActionListener(e -> {
                 controller.handleMove(col);
@@ -43,7 +53,9 @@ public class Window {
             });
             top.add(btn);
         }
-        window.add(top, BorderLayout.BEFORE_FIRST_LINE);
+        northPanel.add(top, BorderLayout.SOUTH);
+
+        window.add(northPanel, BorderLayout.NORTH);
 
         // --- Game board ---
         JPanel board = new JPanel(new GridLayout(ROWS, COLS, 2,2));
@@ -100,7 +112,7 @@ public class Window {
 
         window.add(bottom, BorderLayout.SOUTH);
 
-        window.setSize(800, 700);
+        window.setSize(400, 700);
         window.setLocationRelativeTo(null);
         window.setVisible(true);
 
