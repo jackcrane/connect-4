@@ -56,4 +56,11 @@ public class GameController {
             System.out.println("Error loading game: " + error.getMessage());
         }
     }
+    public Piece[][] getBoardState() {
+        return gameModel.getBoardState();
+    }
+
+    public Player getCurrentPlayer() {
+        return gameModel.getCurrentPlayer();
+    }
 }

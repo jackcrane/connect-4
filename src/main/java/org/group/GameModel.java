@@ -43,4 +43,7 @@ public class GameModel implements Serializable{
         board.resetBoard();
         currentPlayer = 0;
     }
+    public Piece[][] getBoardState() {
+        return board.getBoard();
+    }
 }

@@ -9,4 +9,5 @@ public interface GameBoard extends Serializable {
 	void resetBoard();
 	boolean isValidMove(int columnIndex);
 	boolean isFull();
+	Piece[][] getBoard();
 }

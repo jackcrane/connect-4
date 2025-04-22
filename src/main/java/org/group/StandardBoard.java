@@ -6,16 +6,15 @@ public class StandardBoard implements GameBoard {
 	private int height;
 	
 	public StandardBoard() {
-		board = new Piece[7][6];
-		height = 7;
-		width = 6;
-	}
-	
-	public StandardBoard(int width, int height) {
+		width = 7;
+		height = 6;
 		board = new Piece[width][height];
+	}
+
+	public StandardBoard(int width, int height) {
 		this.width = width;
 		this.height = height;
-		
+		board = new Piece[this.width][this.height];
 	}
 
 	public boolean isValidMove(int col) {
@@ -25,8 +24,8 @@ public class StandardBoard implements GameBoard {
 	public boolean isFull() {
 		return false;
 	}
-	
-	
+
+
 	public boolean placePiece(Piece piece, int columnIndex) {
 		for (int i = 0; i < height; i++) {
 			if (checkSpot(columnIndex,i)) {
@@ -34,20 +33,20 @@ public class StandardBoard implements GameBoard {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public Piece checkWin(Piece checkedPiece) {
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				
+
 				if (board[j][i].equals(checkedPiece)) {
-					
-					//Check for matches all around 
+
+					//Check for matches all around
 					for (int row = -1; row <=1; row++) {
 						for (int col = -1; col <= 1; col++) {
-							
+
 							// Position does not exist, so just continue on.
 							if ((i+row < 0 || i+row >= height) || (j+col < 0 || j+col >= width)) {
 								continue;
@@ -56,18 +55,18 @@ public class StandardBoard implements GameBoard {
 								byte tick = 1;
 								byte xView = (byte)(i+row+row);
 								byte yView = (byte)(j+col+col);
-								
+
 								//Check in a line.
 								while (true) { // If the called position doesn't exist, break.
 									if ((yView < 0 || yView >= height) || (xView < 0 || xView >= width)) {
 										break;
 									}
-									
+
 									if (board[xView][yView].equals(checkedPiece)) {
 										tick++;
 										xView += row;
 										yView += col;
-										
+
 										if (tick >= 4) { // If we get to four in a row, someone won!
 											return checkedPiece;
 										}
@@ -81,7 +80,7 @@ public class StandardBoard implements GameBoard {
 				}
 			}
 		}
-		
+
 		// No piece found.
 		return null;
 	}
@@ -116,7 +115,7 @@ public class StandardBoard implements GameBoard {
 
 		return null;
 	}
-	
+
 	private boolean checkSpot(int columnIndex, int rowIndex) {
 		if (board[columnIndex][rowIndex] == null) {
 			return true;
@@ -124,7 +123,7 @@ public class StandardBoard implements GameBoard {
 			return false;
 		}
 	}
-	
+
 	public void resetBoard() {
 		for (int i = 0; i < height; i++) {
 			for (int r = 0; r < width; r++) {
@@ -132,5 +131,8 @@ public class StandardBoard implements GameBoard {
 			}
 		}
 	}
-	
+
+	public Piece[][] getBoard() {
+		return board;
+	}
 }
