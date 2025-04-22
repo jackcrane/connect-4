@@ -110,7 +110,7 @@ public class Window {
         Piece[][] b = controller.getBoardState();
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
-                cells[r][c].setPiece(b[r][c]);
+                cells[r][c].setPiece(b[c][r]);
             }
         }
         statusLabel.setText("Current Player: " + controller.getCurrentPlayer().getName());
