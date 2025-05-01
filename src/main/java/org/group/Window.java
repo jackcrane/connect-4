@@ -6,18 +6,22 @@ import java.awt.*;
 import java.awt.Image;
 
 public class Window {
-    private static final int ROWS = 6;
-    private static final int COLS = 7;
+    private static int ROWS = 6;
+    private static int COLS = 7;
 
     private final JFrame window;
     private final GameController controller;
-    private final CellPanel[][] cells = new CellPanel[ROWS][COLS];
+    private final CellPanel[][] cells;
 
     private final JLabel statusLabel;
     private final JLabel winnerLabel;
 
     public Window(GameController controller) {
         this.controller = controller;
+        
+        ROWS = controller.getBoardHeight();
+        COLS = controller.getBoardWidth();
+        cells = new CellPanel[ROWS][COLS];
 
         window = new JFrame("Connect 4");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,6 +64,9 @@ public class Window {
         // --- Game board ---
         JPanel board = new JPanel(new GridLayout(ROWS, COLS, 2,2));
         board.setBackground(Color.BLUE);
+        
+        System.out.println("ROWS: " + ROWS + "\nCOLS: " + COLS);
+        
         for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 cells[r][c] = new CellPanel();

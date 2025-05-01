@@ -6,16 +6,19 @@ public class StandardBoard implements GameBoard, Serializable {
 	private Piece[][] board;
 	private int width;
 	private int height;
+	private int STEPS;
 	
 	public StandardBoard() {
 		width = 7;
 		height = 6;
+		STEPS = 4;
 		board = new Piece[width][height];
 	}
 
-	public StandardBoard(int width, int height) {
+	public StandardBoard(int width, int height, int steps) {
 		this.width = width;
 		this.height = height;
+		this.STEPS = steps;
 		board = new Piece[this.width][this.height];
 	}
 
@@ -45,7 +48,6 @@ public class StandardBoard implements GameBoard, Serializable {
 	}
 
 	public Piece checkWin() {
-		int STEPS = 4;
 	    // Directions: horizontal, vertical, and two diagonals
 	    int[][] directions = {
 	        {1, 0},  // horizontal
