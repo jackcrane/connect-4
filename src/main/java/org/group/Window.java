@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.Image;
+import java.net.URL;
 
 public class Window {
     private static int ROWS = 6;
@@ -18,7 +19,7 @@ public class Window {
 
     public Window(GameController controller) {
         this.controller = controller;
-        
+
         ROWS = controller.getBoardHeight();
         COLS = controller.getBoardWidth();
         cells = new CellPanel[ROWS][COLS];
@@ -30,8 +31,11 @@ public class Window {
         // --- Header + Buttons Panel ---
         JPanel northPanel = new JPanel(new BorderLayout());
 
-        String logoPath = "src/main/resources/org/group/Connect_4_game_logo.png";
-        ImageIcon originalIcon = new ImageIcon(logoPath);
+        URL logoUrl = getClass().getClassLoader().getResource("org/group/Connect_4_game_logo.png");
+        if (logoUrl == null) {
+            System.err.println("Logo resource not found");
+        }
+        ImageIcon originalIcon = new ImageIcon(logoUrl);
         Image img = originalIcon.getImage();
         int newWidth = 300;
         int newHeight = img.getHeight(null) * newWidth / img.getWidth(null);
