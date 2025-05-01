@@ -6,8 +6,8 @@ public class GameModel implements Serializable{
     private Player[] players;
     private int currentPlayer;
 
-    public GameModel(){
-        board = new StandardBoard();
+    public GameModel(int boardWidth, int boardHeight, int playTo){
+        board = new StandardBoard(boardWidth, boardHeight, playTo);
         players = new Player[]{
             new Player("Player 1", "Red"),
             new Player("Player 2", "Yellow")

@@ -5,8 +5,16 @@ public class GameController {
     private GameModel gameModel;
     private Window window;
 
-    public GameController() {
-        gameModel = new GameModel();
+    private int width;
+    private int height;
+    private int playTo;
+    
+    public GameController(int boardWidth, int boardHeight, int playTo) {
+    	this.width = boardWidth;
+    	this.height = boardHeight;
+    	this.playTo = playTo;
+    	
+        gameModel = new GameModel(boardWidth, boardHeight, playTo);
         window = new Window(this);
     }
 
@@ -67,5 +75,17 @@ public class GameController {
 
     public Player getCurrentPlayer() {
         return gameModel.getCurrentPlayer();
+    }
+    
+    public int getBoardWidth() {
+    	return width;
+    }
+    
+    public int getBoardHeight() {
+    	return height;
+    }
+    
+    public int getPlayToNumber() {
+    	return playTo;
     }
 }
